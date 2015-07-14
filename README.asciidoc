@@ -1,0 +1,42 @@
+== Arquillian.JS
+
+Prototype for simple JavaScript front end over Arquillian Universe.
+
+Running on Nashorn bootstrapped via nasven
+
+[source, javascript]
+----
+load("arquillian.js")
+
+var deployment = function(archive) {
+	return archive.addAsWebResource(new java.io.File("index.html"));
+}
+
+
+Arquillian.start();
+
+var wildfly = Arquillian.container("wildfly", {
+	chameleonTarget: "wildfly:9.0.0.Final:managed"
+});
+
+wildfly.start()
+
+wildfly.run(deployment, function(url) {
+	print(url)
+})
+
+wildfly.stop()
+
+
+Arquillian.shutdown();
+----
+
+=== How to run
+
+[source, console]
+----
+jjs -scripting $NASVEN_HOME/nasven.js -- .
+----
+
+* Nashorn http://openjdk.java.net/projects/nashorn/
+* nasven https://github.com/nasven/nasven 
