@@ -4,6 +4,8 @@ Prototype for simple JavaScript front end over Arquillian Universe.
 
 Running on Nashorn bootstrapped via nasven
 
+=== Using Arquillian Chameleon container to deploy to a managed WildFly container
+
 [source, javascript]
 ----
 load("arquillian.js")
@@ -17,6 +19,41 @@ Arquillian.start();
 
 var wildfly = Arquillian.container("wildfly", {
 	chameleonTarget: "wildfly:9.0.0.Final:managed"
+});
+
+wildfly.start()
+
+wildfly.run(deployment, function(url) {
+	print(url)
+})
+
+wildfly.stop()
+
+
+Arquillian.shutdown();
+----
+
+=== Using Arquillian Cube to start a Docker image with WildFly and deploy to it
+
+[source, javascript]
+----
+load("arquillian.js")
+
+var deployment = function(archive) {
+	return archive.addAsWebResource(new java.io.File("index.html"));
+}
+
+
+Arquillian.start({
+	docker: {
+		dockerContainersFile: "cube.yaml"
+	}
+});
+
+var wildfly = Arquillian.container("wildfly", {
+	chameleonTarget: "wildfly:9.0.0.Final:remote",
+	username: "admin",
+	password: "Admin#70365"
 });
 
 wildfly.start()

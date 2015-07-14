@@ -14,15 +14,23 @@ arquillian = function() {
 		return f();
 		java.lang.Thread.currentThread().setContextClassLoader(curr);
 	}
-	
-	manager = invoke(function() {
-		return managerBuilder.from()
-		.extensions(Java.type("org.jboss.arquillian.core.impl.loadable.LoadableExtensionLoader").class)
-		.create();
-	})
-	
+
 	return {
-		start: function() {
+		start: function(extensions) {
+			// Setup Extension system properties
+			for(ext in extensions) {
+				for(config in extensions[ext]) {
+					var propName = "arq.extension." + ext + "." + config;
+					var propValue = extensions[ext][config]
+					java.lang.System.setProperty(propName, propValue);
+				}
+			}
+
+			manager = invoke(function() {
+				return managerBuilder.from()
+				.extensions(Java.type("org.jboss.arquillian.core.impl.loadable.LoadableExtensionLoader").class)
+				.create();
+			})
 			manager.start();
 		},
 		shutdown: function() {
@@ -54,6 +62,8 @@ container = function(manager, containerName, containerRef) {
 	var deploy = function(name, f) {
 		var archive = f(org.jboss.shrinkwrap.api.ShrinkWrap.create(Java.type("org.jboss.shrinkwrap.api.spec.WebArchive").class, name));
 		var description = new org.jboss.arquillian.container.spi.client.deployment.DeploymentDescription(name, archive);
+		description.shouldBeTestable(false)
+
 		var deployment = new org.jboss.arquillian.container.spi.client.deployment.Deployment(description);
 		deployments[name] = deployment;
 		var metadata;

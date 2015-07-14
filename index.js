@@ -5,10 +5,16 @@ var deployment = function(archive) {
 }
 
 
-Arquillian.start();
+Arquillian.start({
+	docker: {
+		dockerContainersFile: "cube.yaml"
+	}
+});
 
 var wildfly = Arquillian.container("wildfly", {
-	chameleonTarget: "wildfly:9.0.0.Final:managed"
+	chameleonTarget: "wildfly:9.0.0.Final:remote",
+	username: "admin",
+	password: "Admin#70365"
 });
 
 wildfly.start()

@@ -1,0 +1,6 @@
+wildfly:
+  buildImage:
+    dockerfileLocation: wildfly
+    noCache: true
+    remove: true
+  portBindings: [8081->8080/tcp, 9991->9990/tcp]
