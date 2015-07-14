@@ -1,0 +1,16 @@
+{
+    "name": "arquillian",
+    "version": "1.0.0",
+    "keywords": ["arquillian"],
+    "author": "@aslakknutsen",
+    "contributors": [],
+    "dependencies": {
+        "maven": [
+            "org.jboss.arquillian.core:arquillian-core-impl-base:1.1.8.Final",
+            "org.jboss.arquillian.container:arquillian-container-impl-base:1.1.8.Final",
+            
+            "org.arquillian.container:arquillian-container-chameleon:1.0.0.Alpha2"
+        ]
+    },
+    "engine": "nashorn 1.8.0_45"
+}
