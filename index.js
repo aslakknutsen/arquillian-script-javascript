@@ -4,17 +4,16 @@ var deployment = function(archive) {
 	return archive.addAsWebResource(new java.io.File("index.html"));
 }
 
-
 Arquillian.start({
-	docker: {
-		dockerContainersFile: "cube.yaml"
-	}
+//	docker: {
+//		dockerContainersFile: "cube.yaml"
+//	}
 });
 
 var wildfly = Arquillian.container("wildfly", {
-	chameleonTarget: "wildfly:9.0.0.Final:remote",
-	username: "admin",
-	password: "Admin#70365"
+	chameleonTarget: "wildfly:9.0.0.Final:remote"
+//	username: "admin",
+//	password: "Admin#70365"
 });
 
 wildfly.start()

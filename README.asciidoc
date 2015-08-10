@@ -2,7 +2,7 @@
 
 Prototype for simple JavaScript front end over Arquillian Universe.
 
-Running on Nashorn bootstrapped via nasven
+Running on Nashorn bootstrapped via ShrinkWrap Resolver 
 
 === Using Arquillian Chameleon container to deploy to a managed WildFly container
 
@@ -72,8 +72,7 @@ Arquillian.shutdown();
 
 [source, console]
 ----
-jjs -scripting $NASVEN_HOME/nasven.js -- .
+jjs -scripting index.js
 ----
 
 * Nashorn http://openjdk.java.net/projects/nashorn/
-* nasven https://github.com/nasven/nasven 
